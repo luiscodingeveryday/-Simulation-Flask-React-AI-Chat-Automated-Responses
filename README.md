@@ -20,7 +20,7 @@ The frontend will be available at `http://localhost:3000`
 
 ## AI response simulation
 
-The backend returns simulated answers based on keywords like “hola” or “precio”. This logic can easily be replaced with real calls to an AI model.
+The backend returns simulated answers based on keywords like “hello” or “price”. This logic can easily be replaced with real calls to an AI model.
 
 ## Español
 
@@ -44,4 +44,4 @@ El frontend queda disponible en `http://localhost:3000`
 
 ## Simulación de respuestas IA
 
-El backend devuelve respuestas simuladas basadas en palabras clave como “hola” o “precio”. Esta lógica puede reemplazarse fácilmente por llamadas reales a un modelo de IA.
+El backend devuelve respuestas simuladas basadas en palabras clave como “hello” o “price”. Esta lógica puede reemplazarse fácilmente por llamadas reales a un modelo de IA.
