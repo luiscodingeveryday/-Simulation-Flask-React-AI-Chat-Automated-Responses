@@ -10,10 +10,10 @@ def chat():
     user_message = request.json.get('message', '')
 
     # Simulate AI response (replace with your real Azure call)
-    if 'hola' in user_message.lower():
+    if 'hello' in user_message.lower():
         response_text = "Hello! How can I help you today?"
-    elif 'precio' in user_message.lower():
-        response_text = "Our prices are competitive—what service are you interested in?"
+    elif 'price' in user_message.lower():
+        response_text = "Our prices are competitive. What service are you interested in?"
     else:
         response_text = "Sorry, I didn't understand that. Could you try rephrasing?"
 
