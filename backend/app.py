@@ -1,22 +1,24 @@
+# backend/app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Para permitir que React consuma este backend desde otro puerto
+CORS(app)  # Allow React frontend to call this backend from a different port
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message', '')
 
-    # Simulación de respuesta de IA (aquí pondrías el call real a Azure)
+    # Simulate AI response (replace with your real Azure call)
     if 'hola' in user_message.lower():
-        response_text = "¡Hola! ¿En qué puedo ayudarte hoy?"
+        response_text = "Hello! How can I help you today?"
     elif 'precio' in user_message.lower():
-        response_text = "Nuestros precios son competitivos, ¿qué servicio te interesa?"
+        response_text = "Our prices are competitive—what service are you interested in?"
     else:
-        response_text = "Lo siento, no entendí tu pregunta. ¿Puedes reformularla?"
+        response_text = "Sorry, I didn't understand that. Could you try rephrasing?"
 
     return jsonify({'response': response_text})
 
 if __name__ == '__main__':
+    # Run in debug mode for development
     app.run(debug=True)

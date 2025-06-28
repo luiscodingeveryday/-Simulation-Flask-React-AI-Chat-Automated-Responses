@@ -1,36 +1,49 @@
+// frontend/src/App.js
 import React, { useState } from 'react';
 
 function App() {
+  // State to hold chat messages, starting with a bot greeting
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hola, soy tu asistente virtual. ¿En qué puedo ayudarte?' },
+    { sender: 'bot', text: 'Hi there, I’m your virtual assistant. How can I help you today?' },
   ]);
+  // State to hold the current input value
   const [input, setInput] = useState('');
 
+  // Sends the user’s message to the backend and processes the response
   const sendMessage = async () => {
+    // Do nothing if the input is empty or only whitespace
     if (!input.trim()) return;
 
+    // Add the user’s message to the conversation
     const userMsg = { sender: 'user', text: input };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages(prev => [...prev, userMsg]);
+    // Clear the input field
     setInput('');
 
     try {
+      // Send POST request to Flask backend
       const res = await fetch('http://localhost:5000/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input }),
       });
 
+      // Parse JSON response
       const data = await res.json();
+      // Add the bot’s reply to the conversation
       const botMsg = { sender: 'bot', text: data.response };
-      setMessages((prev) => [...prev, botMsg]);
+      setMessages(prev => [...prev, botMsg]);
     } catch (error) {
-      console.error('Error:', error);
-      const botMsg = { sender: 'bot', text: 'Error de conexión al servidor.' };
-      setMessages((prev) => [...prev, botMsg]);
+      // Log any fetch errors
+      console.error('Connection error:', error);
+      // Show a generic error message to the user
+      const botMsg = { sender: 'bot', text: 'Server connection error.' };
+      setMessages(prev => [...prev, botMsg]);
     }
   };
 
-  const handleKeyDown = (e) => {
+  // Send message when user presses Enter
+  const handleKeyDown = e => {
     if (e.key === 'Enter') {
       sendMessage();
     }
@@ -38,7 +51,10 @@ function App() {
 
   return (
     <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-      <h2>Chat de Soporte</h2>
+      {/* Chat title */}
+      <h2>Support Chat</h2>
+
+      {/* Chat message container */}
       <div
         style={{
           border: '1px solid #ccc',
@@ -48,6 +64,7 @@ function App() {
           marginBottom: 10,
         }}
       >
+        {/* Render each message */}
         {messages.map((m, i) => (
           <div
             key={i}
@@ -71,16 +88,19 @@ function App() {
           </div>
         ))}
       </div>
+
+      {/* Input field for typing messages */}
       <input
         type="text"
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={e => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Escribe tu mensaje..."
+        placeholder="Type your message..."
         style={{ width: '80%', padding: 10 }}
       />
+      {/* Button to send the message */}
       <button onClick={sendMessage} style={{ padding: 10, marginLeft: 5 }}>
-        Enviar
+        Send
       </button>
     </div>
   );
